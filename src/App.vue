@@ -1,12 +1,20 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <link href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2" rel="stylesheet" type="text/css">
+    <Appheader />
     <router-view />
   </div>
 </template>
+
+<script>
+import Appheader from "@/components/global/Appheader.vue";
+export default {
+  name : "App",
+  components : {
+    Appheader
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
