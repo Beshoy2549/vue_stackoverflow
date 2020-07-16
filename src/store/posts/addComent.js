@@ -2,12 +2,10 @@ import appServices from "../../services/app";
 
 export default {
   state: {
-    checkuserrate : ''
+   
   },
   getters: {
-    checkuserrate(state) {
-      state.checkuserrate
-    }
+
   },
   mutations: {
     yes(state, data) {
@@ -16,8 +14,8 @@ export default {
     yes2(state, data) {
       return data;
     },
-    checkuserrate(state ,data) {
-    return state.checkuserrate = data
+    checkuserrate() {
+    console.log("test")
     }
   },
   actions: {
@@ -37,7 +35,7 @@ export default {
     ADDCOMMENTRATE({ commit }, params) {
       return new Promise((resolve, reject) => {
         appServices
-          .incresaddRateOfComment(params)
+          .addComment(params)
           .then(res => {
             commit("updateRate", { data: res.data.data, params: params });
             resolve(res);
@@ -52,7 +50,7 @@ export default {
         appServices
           .incresaddRateOfComment(params)
           .then(res => {
-            commit("updateRate", params ); //{ data: res.data.data, params: params }
+            commit("updateRate" ); //{ data: res.data.data, params: params }
             resolve(res);
           })
           .catch(error => {
@@ -65,7 +63,7 @@ export default {
         appServices
           .dicresaddRateOfComment(params)
           .then(res => {
-            commit("updateRate",params);
+            commit("updateRate");
             resolve(res);
           })
           .catch(error => {

@@ -18,13 +18,20 @@
       </div>
       <div class="replys">
         <h2>Replys</h2>
-        <div class="replay-box" v-for="(list, i) in getSingle.answers" :key="i">
-          {{ list.body }}
+        <div class="replay-box" v-for="(list, i) in getSingle.answers"  :key="i" list.check.rate = null> 
+          {{ list.body }} 
           <div class="rate">
             <div v-if="$store.state.login.token">
-            
-              <span @click="checkUser(list.id)" v-if="con"> up </span>
-              <span @click="dicrate(list.id) && checkUser(list.id)" v-if="!con"> down </span>
+              
+              <div v-if="list.check">
+                <span @click="addrate(list.id)" v-if="list.check.rate == 0" > <b-icon-heart  font-scale="1.2"  /> </span>
+                <span @click="dicrate(list.id)" v-if="list.check.rate == 1">  <b-icon-heart-fill  variant="danger" font-scale="1.2" />  </span>
+              </div>
+
+              <div v-else>
+                <span @click="addrate(list.id)"> up </span>
+              </div>
+
             </div>
             <div class="numberofrate">{{ list.rate }}</div>
           </div>
@@ -59,8 +66,7 @@ export default {
     return {
       listOfComments: [],
       body: "",
-      con: true,
-      count: 0,
+      count: 1,
       rate: 1,
     };
   },
@@ -75,7 +81,6 @@ export default {
 
       this.$store.dispatch("ADDCOMMENTS", form).then(() => {
         this.body = "";
-        //this.$store.dispatch("getSinglePost", this.$route.params.id);
       });
     },
 
@@ -87,10 +92,10 @@ export default {
         id: id,
       };
       this.$store.dispatch("INCRESADDCOMMENTRATE", params).then(() => {
-        //DICRESADDCOMMENTRATE
+
         this.$store.dispatch("getSinglePost", this.$route.params.id);
       });
-      this.con = false;
+     
     },
     dicrate(id) {
       const params = {
@@ -100,27 +105,24 @@ export default {
         id: id,
       };
       this.$store.dispatch("DICRESADDCOMMENTRATE", params).then(() => {
-        //DICRESADDCOMMENTRATE
+      
         this.$store.dispatch("getSinglePost", this.$route.params.id);
       });
-      this.con = true;
+     
     },
-    checkUser(id) {
-      this.$store.dispatch("CHECKUSERRATE" , id)
-    }
   },
   computed: {
     getSingle() {
       return this.$store.getters.getSingle;
     },
-    checkuserrate() {
-      return this.$store.getters.checkuserrate;
-    },
+
   },
 
   mounted() {
     this.$store.dispatch("getSinglePost", this.$route.params.id);
+   
   },
+
 };
 </script>
 

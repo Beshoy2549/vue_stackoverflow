@@ -14,7 +14,7 @@ export default {
       return (state.singlePost = data);
     },
     addComment(state, data) {
-      return state.singlePost.answers.push(data);
+      return state.singlePost.answers.unshift(data);
     },
     updateRate() {
       // state.singlePost.answers.forEach(answer => {
@@ -28,20 +28,33 @@ export default {
     }
   },
   actions: {
-    getSinglePost({ commit }, id) {
+    getSinglePost({ commit}, id) {
       return new Promise((resolve, reject) => {
         appServices
           .getSinglePost(id)
           .then(res => {
-            console.log(res);
             commit("getSingle", res.data.data);
-            resolve(res);
+            resolve(res.data.data);
           })
           .catch(error => {
             reject(error);
           });
       });
     },
+    // CHECKUSERRATE({ commit }, id) {
+    //   return new Promise((resolve, reject) => {
+    //     appServices
+    //       .checkuserrate(id)
+    //       .then(() => {
+    //         // console.log(res.data.data);
+    //         commit("checkuserrate");
+    //         resolve();
+    //       })
+    //       .catch(error => {
+    //         reject(error);
+    //       });
+    //   });
+    // },
     POSTSOLVED({ commit }, id) {
       return new Promise((resolve, reject) => {
         appServices
